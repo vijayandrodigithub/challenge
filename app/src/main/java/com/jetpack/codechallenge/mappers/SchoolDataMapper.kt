@@ -9,7 +9,6 @@ class SchoolDataMapper {
         return SchoolItem(
             name = remoteSchools.school_name,
             dbn = remoteSchools.dbn,
-            email = remoteSchools.school_email,
             address = schoolAddress(remoteSchools)
         )
     }

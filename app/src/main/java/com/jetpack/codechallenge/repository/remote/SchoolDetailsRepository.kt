@@ -5,7 +5,7 @@ import com.jetpack.codechallenge.ui.home.models.SchoolItem
 
 interface SchoolRepository {
     suspend fun fetchSchools(): List<SchoolItem>
-    suspend fun fetchSchoolInfo(): SchoolItem
+    suspend fun fetchSchoolInfo(dbn: String): SchoolItem
 
 }
 
@@ -21,8 +21,9 @@ class SchoolsRepositoryImpl(private val dependencies: SchoolsRepositoryDependenc
         return schools.map { dependencies.dataMapper.mapSchoolItem(it) }
     }
 
-    override suspend fun fetchSchoolInfo(): SchoolItem {
-        TODO("Not yet implemented")
+    override suspend fun fetchSchoolInfo(dbn: String): SchoolItem {
+        val schools = dependencies.remoteDataSource.fetchSchoolInfo(dbn)
+        return dependencies.dataMapper.mapSchoolItem(schools[0])
     }
 
     /*override suspend fun fetchById(id: Int): MovieDetails {

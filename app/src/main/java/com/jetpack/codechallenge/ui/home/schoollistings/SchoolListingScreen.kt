@@ -18,18 +18,15 @@ import com.jetpack.codechallenge.ui.themes.AppTheme
 import com.jetpack.codechallenge.util.view.*
 import org.koin.androidx.compose.getViewModel
 
-
 @Composable
 fun SchoolListingScreen(
-    modifier: Modifier = Modifier,
-    viewModel: SchoolViewModel = getViewModel()
+    viewModel: SchoolViewModel = getViewModel(),
+    onNavigateToDetails: (SchoolItem) -> Unit
 ) {
     viewModel.loadSchools()
     AppTheme {
         val state = viewModel.listingUiState.collectAsState()
-        MovieListingContent(state.value) {
-            //viewModel.navigateToSchoolItem(it)
-        }
+        MovieListingContent(state.value, onNavigateToDetails)
     }
 }
 
@@ -37,14 +34,14 @@ fun SchoolListingScreen(
 fun MovieListingContent(
     state: SchoolUiState = SchoolUiState.Empty,
     onNavigateToDetails: (SchoolItem) -> Unit = {},
-) {
+    ) {
     val context = LocalContext.current
     when (state) {
         SchoolUiState.Loading -> {
             AppCircularProgressBar()
         }
         is SchoolUiState.DisplaySchools -> {
-            DisplayMoviesList(state.data, onNavigateToDetails)
+            DisplaySchoolList(state.data, onNavigateToDetails)
         }
         SchoolUiState.Empty -> {
             AppBodyText("There are no Movies")
@@ -53,14 +50,14 @@ fun MovieListingContent(
             Toast.makeText(context, "Some thing went error", Toast.LENGTH_SHORT).show()
         }
         else -> {
-
+            Toast.makeText(context, "Else", Toast.LENGTH_SHORT).show()
         }
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun DisplayMoviesList(
+fun DisplaySchoolList(
     movies: List<SchoolItem>,
     onNavigateToDetails: (SchoolItem) -> Unit
 ) {

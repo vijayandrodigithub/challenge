@@ -2,6 +2,7 @@ package com.jetpack.codechallenge.di
 
 
 import com.jetpack.codechallenge.mappers.SchoolDataMapper
+import com.jetpack.codechallenge.navigation.NavigationManager
 import com.jetpack.codechallenge.services.SchoolApi
 import com.jetpack.codechallenge.repository.remote.*
 import com.jetpack.codechallenge.ui.home.SchoolViewModel
@@ -26,8 +27,9 @@ val appModule = module {
 
 val schoolModules = module {
 
-    viewModel { SchoolViewModel(schoolsUseCase = get()) }
+    viewModel { SchoolViewModel(schoolsUseCase = get(), navigationManager = get()) }
     factory { SchoolsUseCase(repository = get()) }
+    factory { NavigationManager() }
     factory { SchoolDataMapper() }
     factory<SchoolRemoteDataSource> { SchoolRemoteDataSourceImpl(schoolsApi = get()) }
     factory {

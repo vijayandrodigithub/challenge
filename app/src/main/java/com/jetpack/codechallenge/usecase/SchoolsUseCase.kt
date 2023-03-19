@@ -11,7 +11,7 @@ class SchoolsUseCase(
         return repository.fetchSchools()
     }
 
-    suspend fun fetchSchoolInfo(): SchoolItem {
-        return repository.fetchSchoolInfo()
+    suspend fun fetchSchoolInfo(dbn: String): SchoolItem {
+        return repository.fetchSchoolInfo(dbn)
     }
 }
