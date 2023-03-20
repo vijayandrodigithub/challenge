@@ -14,6 +14,9 @@ import com.jetpack.codechallenge.util.view.AppBodyText
 import com.jetpack.codechallenge.util.view.AppTitleText
 import org.koin.androidx.compose.getViewModel
 
+/**
+ * MovieDetailsScreen display the details of each school information
+ */
 @Composable
 fun MovieDetailsScreen(id: String?, viewModel: SchoolViewModel = getViewModel()) {
     AppTheme {

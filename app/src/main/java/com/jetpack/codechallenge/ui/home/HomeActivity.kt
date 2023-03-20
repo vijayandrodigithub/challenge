@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.jetpack.codechallenge.navigation.NavigationManager
@@ -20,6 +21,9 @@ import com.jetpack.codechallenge.util.view.px
 import org.koin.android.ext.android.inject
 
 
+/**
+ * HomeActivity Single activity handle SchoolListing and SchoolInfo screens using compose
+ */
 class HomeActivity: ComponentActivity() {
 
     private val navigationManager: NavigationManager by inject()
@@ -59,7 +63,7 @@ class HomeActivity: ComponentActivity() {
     fun TopBar() {
         TopAppBar(
             title = {
-                Text(text = "Top App Bar")
+                Text(text = "NY Schools", color = Color.White)
             },
             navigationIcon = {
                 IconButton(onClick = { finish() }) {

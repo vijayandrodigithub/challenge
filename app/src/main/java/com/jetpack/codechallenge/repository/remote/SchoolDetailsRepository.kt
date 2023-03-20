@@ -9,11 +9,17 @@ interface SchoolRepository {
 
 }
 
+/**
+ * SchoolsRepositoryDependencies can give multiple data source inputs like Remote or Local
+ */
 class SchoolsRepositoryDependencies(
     val remoteDataSource: SchoolRemoteDataSource,
     val dataMapper: SchoolDataMapper
 )
 
+/**
+ * SchoolsRepositoryImpl It helps the fetching data from sources
+ */
 class SchoolsRepositoryImpl(private val dependencies: SchoolsRepositoryDependencies) :
     SchoolRepository {
     override suspend fun fetchSchools(): List<SchoolItem> {
@@ -25,15 +31,4 @@ class SchoolsRepositoryImpl(private val dependencies: SchoolsRepositoryDependenc
         val schools = dependencies.remoteDataSource.fetchSchoolInfo(dbn)
         return dependencies.dataMapper.mapSchoolItem(schools[0])
     }
-
-    /*override suspend fun fetchById(id: Int): MovieDetails {
-        val remoteMovie = dependencies.remoteDataSource.fetchMovieById(id)
-        val data = dependencies.dataMapper.map(remoteMovie)
-        dependencies.localDataSource.insertMovies(listOf(data))
-        return data
-    }
-
-    override suspend fun updateFavoriteMovie(id: Int, isBookmarked: Boolean): Int {
-        return dependencies.localDataSource.updateFavoriteMovie(id, isBookmarked)
-    }*/
 }

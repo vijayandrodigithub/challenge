@@ -2,8 +2,7 @@ package com.jetpack.codechallenge.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jetpack.codechallenge.navigation.MovieDetailDirections
-import com.jetpack.codechallenge.navigation.SchoolDetailDirections
+import com.jetpack.codechallenge.navigation.SchoolInfoDirections
 import com.jetpack.codechallenge.navigation.NavigationManager
 import com.jetpack.codechallenge.ui.home.models.SchoolItem
 import com.jetpack.codechallenge.usecase.SchoolsUseCase
@@ -12,20 +11,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * SchoolViewModel used to fetch the school list and info date from schoolsUseCase
+ */
 class SchoolViewModel(
     private val schoolsUseCase: SchoolsUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val navigationManager: NavigationManager,
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _listingUiState = MutableStateFlow<SchoolUiState>(SchoolUiState.Loading)
     val listingUiState get() = _listingUiState
 
+    //Orientation mode rather than fetching data from api, can be retrieve standard way
     fun loadSchools() {
         viewModelScope.launch(dispatcher) {
-            val movies = schoolsUseCase.fetchSchools()
+            val schools = schoolsUseCase.fetchSchools()
             val state =
-                if (movies.isEmpty()) SchoolUiState.Empty else SchoolUiState.DisplaySchools(data = movies)
+                if (schools.isEmpty()) SchoolUiState.Empty else SchoolUiState.DisplaySchools(data = schools)
             _listingUiState.tryEmit(state)
         }
     }
@@ -37,10 +40,13 @@ class SchoolViewModel(
         }
     }
 
+    // There is problem on MutableStateFlow not trigger some time
+    // it will take school Details Info screen bases on DBN value
     fun navigateToMovieDetails(movieDetails: SchoolItem) {
-        val command = MovieDetailDirections.movieDetails
-        command.navigationPath = "movie_details/${movieDetails.dbn}"
-        navigationManager.navigate(command)
+        viewModelScope.launch((Dispatchers.Main)) {
+            val command = SchoolInfoDirections.schoolInfo
+            command.navigationPath = "school_info/${movieDetails.dbn}"
+            navigationManager.navigate(command)
+        }
     }
-
 }
