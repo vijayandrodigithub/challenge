@@ -18,7 +18,7 @@ import org.koin.androidx.compose.getViewModel
  * MovieDetailsScreen display the details of each school information
  */
 @Composable
-fun MovieDetailsScreen(id: String?, viewModel: SchoolViewModel = getViewModel()) {
+fun SchoolDetailsScreen(id: String?, viewModel: SchoolViewModel = getViewModel()) {
     AppTheme {
         val state by viewModel.listingUiState.collectAsState()
         viewModel.fetchSchoolDetails(id ?: "")

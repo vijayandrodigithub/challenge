@@ -12,7 +12,7 @@ import androidx.navigation.navArgument
 import com.jetpack.codechallenge.navigation.HomeDirections
 import com.jetpack.codechallenge.navigation.SchoolInfoDirections.DBN_ID
 import com.jetpack.codechallenge.ui.home.SchoolViewModel
-import com.jetpack.codechallenge.ui.home.schoollistings.MovieDetailsScreen
+import com.jetpack.codechallenge.ui.home.schoollistings.SchoolDetailsScreen
 import com.jetpack.codechallenge.ui.home.schoollistings.SchoolListingScreen
 
 @Composable
@@ -46,11 +46,13 @@ fun NavGraphBuilder.mainGraph(viewModel: SchoolViewModel) {
                     viewModel.navigateToMovieDetails(it)
                 })
         }
+
         composable(
-            "school_info/{movie_id}",
+            "schoolinfo/{DBN_ID}",
             arguments = listOf(navArgument(DBN_ID) { type = NavType.StringType })
         ) {
-            MovieDetailsScreen(id = it.arguments?.getString(DBN_ID), viewModel)
+            SchoolDetailsScreen(id = it.arguments?.getString(DBN_ID), viewModel)
         }
     }
+
 }

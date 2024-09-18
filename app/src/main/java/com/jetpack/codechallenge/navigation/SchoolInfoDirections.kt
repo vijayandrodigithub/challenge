@@ -10,7 +10,7 @@ object SchoolInfoDirections {
         override val arguments: List<NamedNavArgument>
             get() = listOf(navArgument(DBN_ID) { type = NavType.StringType })
         override val destination: String
-            get() = "school_info/{$DBN_ID}"
+            get() = "schoolinfo/{$DBN_ID}"
         override var navigationPath : String
             get() = ""
             set(value) {}
