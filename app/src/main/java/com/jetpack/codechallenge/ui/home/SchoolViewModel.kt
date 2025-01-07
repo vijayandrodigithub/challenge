@@ -60,7 +60,7 @@ class SchoolViewModel(
           /*  val command: NavCommand = SchoolInfoDirections.schoolInfo
             command.navigationPath = "schoolinfo/${schoolItem.dbn}"
             Log.e("?????","command: $command")*/
-            _selectedSchool.tryEmit(schoolItem.dbn)
+            _selectedSchool.tryEmit("1")
             //navigationManager.navigate(command)
         }
     }
@@ -68,7 +68,8 @@ class SchoolViewModel(
     fun navigateToSchoolInfo() {
         viewModelScope.launch {
             val command = SchoolInfoDirections.schoolInfo
-            command.navigationPath = "schoolinfo/${"1sds"}"
+            Log.e("?????","command: $command")
+            command.navigationPath = "schools"
             _navCommand.tryEmit(command)
         }
     }

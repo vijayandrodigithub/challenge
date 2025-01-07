@@ -22,14 +22,13 @@ import com.jetpack.codechallenge.ui.home.SchoolViewModel
 import com.jetpack.codechallenge.ui.home.models.SchoolItem
 import com.jetpack.codechallenge.ui.themes.AppTheme
 import com.jetpack.codechallenge.util.view.*
-import org.koin.androidx.compose.getViewModel
 
 /**
  * SchoolListingScreen display list of schools from NY Api data
  */
 @Composable
 fun SchoolListingScreen(
-    viewModel: SchoolViewModel = getViewModel(),
+    viewModel: SchoolViewModel,
     onNavigateToDetails: (SchoolItem) -> Unit
 ) {
     viewModel.loadSchools()

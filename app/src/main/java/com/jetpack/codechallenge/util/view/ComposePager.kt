@@ -14,6 +14,7 @@ import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -104,8 +105,8 @@ private val PAGER_INDICATOR_SPACE = 16.px
 fun AppPagerIndicator(
     state: PagerState,
     modifier: Modifier = Modifier,
-    activeColor: Color = AppTheme.colors.red.primary,
-    inactiveColor: Color = AppTheme.colors.onBackground,
+    activeColor: Color = colors.primary,
+    inactiveColor: Color = colors.onBackground,
     indicatorRadius: Dp = PAGER_INDICATOR_DOT_SIZE,
     spacing: Dp = PAGER_INDICATOR_SPACE,
 ) {

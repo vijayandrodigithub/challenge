@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -22,6 +23,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.jetpack.codechallenge.ui.themes.AppTheme
+import com.jetpack.codechallenge.ui.themes.shapes
+import com.jetpack.codechallenge.ui.themes.typography
 
 @Composable
 fun AppTextField(
@@ -31,19 +34,19 @@ fun AppTextField(
     enabled: Boolean = true,
     isError: Boolean = false,
     singleLine: Boolean = true,
-    textStyle: TextStyle = AppTheme.typography.title.copy(textAlign = TextAlign.Center),
+    textStyle: TextStyle = typography.titleLarge.copy(textAlign = TextAlign.Center),
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    shape: Shape = AppTheme.shapes.small,
+    shape: Shape = shapes.small,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 ) {
     val colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
-        backgroundColor = AppTheme.colors.background,
-        focusedBorderColor = AppTheme.colors.blue.dark,
-        unfocusedBorderColor = AppTheme.colors.blue.primary,
-        textColor = AppTheme.colors.blue.secondary,
-        cursorColor = AppTheme.colors.blue.secondary
+        backgroundColor = colors.background,
+        focusedBorderColor = colors.primary,
+        unfocusedBorderColor = colors.primaryVariant,
+        textColor = colors.secondary,
+        cursorColor = colors.secondary
     )
 
     val textColor = textStyle.color.takeOrElse {

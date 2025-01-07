@@ -2,7 +2,7 @@
 
 package com.jetpack.codechallenge.ui.themes
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
@@ -25,37 +25,31 @@ val robotoFonts = FontFamily(
 
 
 val typography = Typography(
-    h1 = TextStyle(
+    headlineLarge = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 32.sp,
         lineHeight = 16.sp,
         fontFamily = robotoFonts
     ),
-    h2 = TextStyle(
+    headlineMedium = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 18.sp,
         fontFamily = robotoFonts
     ),
-    h3 = TextStyle(
+    headlineSmall = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 16.sp,
         fontFamily = robotoFonts
     ),
-    h4 = TextStyle(
-        fontWeight = FontWeight.Normal,
-        fontSize = 10.sp,
-        lineHeight = 14.sp,
-        fontFamily = robotoFonts
-    ),
-    subtitle1 = TextStyle(
+    labelLarge = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
         lineHeight = 22.sp,
         fontFamily = robotoFonts
     ),
-    subtitle2 = TextStyle(
+    labelMedium = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp,
         lineHeight = 20.sp,

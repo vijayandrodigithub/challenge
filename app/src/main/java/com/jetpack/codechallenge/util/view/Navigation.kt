@@ -46,13 +46,6 @@ fun NavGraphBuilder.mainGraph(viewModel: SchoolViewModel) {
                     viewModel.navigateToMovieDetails(it)
                 })
         }
-
-        composable(
-            "schoolinfo/{DBN_ID}",
-            arguments = listOf(navArgument(DBN_ID) { type = NavType.StringType })
-        ) {
-            SchoolDetailsScreen(id = it.arguments?.getString(DBN_ID), viewModel)
-        }
     }
 
 }

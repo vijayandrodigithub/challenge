@@ -10,6 +10,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,6 +34,8 @@ import androidx.compose.ui.unit.Dp
 import com.jetpack.codechallenge.R
 import com.jetpack.codechallenge.ui.themes.AppTheme
 import com.jetpack.codechallenge.ui.themes.LocalAppColors
+import com.jetpack.codechallenge.ui.themes.shapes
+import com.jetpack.codechallenge.ui.themes.typography
 import com.jetpack.codechallenge.util.Constants
 import kotlin.math.ceil
 
@@ -43,31 +46,27 @@ fun AppBackButton(
     enabled: Boolean = true,
     defaultXOffset: Dp = (-8).px
 ) {
-    val ripple = rememberRipple(
-        color = LocalAppColors.current.gray.light,
-        radius = 24.px,
-        bounded = false,
-    )
     val haptic = LocalHapticFeedback.current
-    CompositionLocalProvider(LocalIndication provides ripple) {
-        Icon(
-            modifier = modifier
-                .offset(x = defaultXOffset)
-                .size(48.px)
-                .clickable(
-                    enabled = enabled,
-                    onClick = {
-                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                        onClick()
-                    },
-                )
-                .padding(4.px),
-            painter = painterResource(id = R.drawable.ic_arrow_back),
-            contentDescription = null,
-            tint = LocalAppColors.current.onBackground
-        )
-    }
+
+    // Use the default ripple from `Modifier.clickable` with customized indication
+    Icon(
+        modifier = modifier
+            .offset(x = defaultXOffset)
+            .size(48.px)
+            .clickable(
+                enabled = enabled,
+                onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    onClick()
+                }
+            )
+            .padding(4.px),
+        painter = painterResource(id = R.drawable.ic_arrow_back),
+        contentDescription = null,
+        tint = LocalAppColors.current.onBackground
+    )
 }
+
 
 @Composable
 fun AppRoundedCrewAssistButton(
@@ -80,9 +79,9 @@ fun AppRoundedCrewAssistButton(
     innerBorderStrokeWidth: Dp = 3.px,
     cornerRadius: Dp = 60.px,
 
-    backgroundColor: Color = AppTheme.colors.brand.coral,
-    pressedBackgroundColor: Color = AppTheme.colors.red.primary,
-    contentColor: Color = AppTheme.colors.background,
+    backgroundColor: Color = colors.onPrimary,
+    pressedBackgroundColor: Color = colors.primary,
+    contentColor: Color = colors.background,
 
     animated: Boolean = false,
     animationDuration: Int = 3000,
@@ -118,9 +117,9 @@ fun AppCircleCrewAssistButton(
     innerBorderStrokeWidth: Dp = 3.px,
     cornerRadius: Dp = 120.px,
 
-    backgroundColor: Color = AppTheme.colors.brand.coral,
-    pressedBackgroundColor: Color = AppTheme.colors.red.primary,
-    contentColor: Color = AppTheme.colors.background,
+    backgroundColor: Color = colors.primary,
+    pressedBackgroundColor: Color = colors.primary,
+    contentColor: Color = colors.background,
 
     animated: Boolean = false,
     animationDuration: Int = 3000,
@@ -154,9 +153,9 @@ private fun AppCrewAssistButton(
     innerBorderStrokeWidth: Dp = 3.px,
     cornerRadius: Dp = 0.px,
 
-    backgroundColor: Color = AppTheme.colors.brand.coral,
-    pressedBackgroundColor: Color = AppTheme.colors.red.primary,
-    contentColor: Color = AppTheme.colors.background,
+    backgroundColor: Color = colors.primary,
+    pressedBackgroundColor: Color = colors.primary,
+    contentColor: Color = colors.background,
 
     animated: Boolean = false,
     animationDuration: Int = 3000,
@@ -221,7 +220,7 @@ private fun AppCrewAssistButton(
         }
         Text(
             text = if (pressed && animated) "Hold for $secondsToEnd s" else text,
-            style = AppTheme.typography.title
+            style = typography.titleMedium
         )
     }
 }
@@ -282,18 +281,17 @@ fun AppDestructiveButton(
     icon = icon,
     enabled = enabled,
     buttonColors = DefaultAppButtonColors.outlined(
-        backgroundColor = AppTheme.colors.background,
-        contentColor = AppTheme.colors.red.secondary,
-        borderColor = AppTheme.colors.red.primary,
-        pressedBackgroundColor = AppTheme.colors.red.primary,
-        pressedContentColor = AppTheme.colors.onBackground,
-        pressedBorderColor = AppTheme.colors.red.primary,
-        disabledBackgroundColor = AppTheme.colors.background,
-        disabledContentColor = AppTheme.colors.red.secondary.copy(alpha = Constants.REQUIRED_ALPHA),
-        disabledBorderColor = AppTheme.colors.red.primary.copy(alpha = Constants.REQUIRED_ALPHA)
+        backgroundColor = colors.background,
+        contentColor = colors.secondary,
+        borderColor = colors.primary,
+        pressedBackgroundColor = colors.primary,
+        pressedContentColor = colors.onBackground,
+        pressedBorderColor = colors.primary,
+        disabledBackgroundColor = colors.background,
+        disabledContentColor = colors.secondary.copy(alpha = Constants.REQUIRED_ALPHA),
+        disabledBorderColor = colors.primary.copy(alpha = Constants.REQUIRED_ALPHA)
     ),
     interactionSource = interactionSource,
-    indication = rememberRipple(color = AppTheme.colors.red.secondary),
     iconSize = iconSize,
     isShortSized = isShortSized
 )
@@ -310,20 +308,19 @@ fun AppSecondaryButton(
     AppButton(
         enabled = enabled,
         buttonColors = DefaultAppButtonColors.filled(
-            backgroundColor = AppTheme.colors.overlay,
-            contentColor = AppTheme.colors.onBackground,
-            disabledBackgroundColor = AppTheme.colors.background,
-            disabledContentColor = AppTheme.colors.onBackground.copy(alpha = Constants.REQUIRED_ALPHA)
+            backgroundColor = colors.secondary,
+            contentColor = colors.onBackground,
+            disabledBackgroundColor = colors.background,
+            disabledContentColor = colors.onBackground.copy(alpha = Constants.REQUIRED_ALPHA)
         ),
         modifier = modifier,
         onClick = onClick,
         isShortSized = isShortSized,
         interactionSource = interactionSource,
-        indication = rememberRipple(color = AppTheme.colors.gray.primary)
     ) {
         Text(
             text = text,
-            style = AppTheme.typography.title,
+            style = typography.titleMedium,
         )
     }
 }
@@ -344,7 +341,6 @@ fun AppPrimaryButton(
     enabled = enabled,
     buttonColors = DefaultAppButtonColors.outlined(),
     interactionSource = interactionSource,
-    indication = rememberRipple(color = AppTheme.colors.blue.primary)
 )
 
 @Composable
@@ -388,7 +384,7 @@ private fun AppOutlineButton(
         Text(
             text = text,
             modifier = Modifier.align(Alignment.Center),
-            style = AppTheme.typography.title,
+            style = typography.titleMedium,
         )
     }
 }
@@ -400,7 +396,7 @@ private fun AppButton(
     enabled: Boolean = true,
     pressed: Boolean = false,
     borderStroke: BorderStroke? = null,
-    shape: Shape = AppTheme.shapes.small,
+    shape: Shape = shapes.small,
     buttonColors: AppButtonColors = DefaultAppButtonColors.outlined(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     indication: Indication? = null,
@@ -423,7 +419,7 @@ private fun AppButton(
         contentColor = contentColor,
     ) {
         CompositionLocalProvider(LocalContentAlpha provides contentColor.alpha) {
-            ProvideTextStyle(value = AppTheme.typography.title) {
+            ProvideTextStyle(value = typography.titleMedium) {
                 val boxModifier = if (isShortSized) {
                     Modifier
                         .wrapContentWidth()
@@ -461,7 +457,6 @@ fun AppShortButton(
     buttonColors = DefaultAppButtonColors.outlined(),
     interactionSource = interactionSource,
     isShortSized = isShortSized,
-    indication = rememberRipple(color = AppTheme.colors.blue.primary)
 )
 
 interface AppButtonColors {
@@ -522,17 +517,17 @@ private data class DefaultAppButtonColors(
 
         @Composable
         fun outlined(
-            backgroundColor: Color = AppTheme.colors.background,
-            contentColor: Color = AppTheme.colors.blue.secondary,
-            borderColor: Color = AppTheme.colors.blue.primary,
+            backgroundColor: Color = colors.background,
+            contentColor: Color = colors.secondary,
+            borderColor: Color = colors.primary,
 
-            pressedBackgroundColor: Color = AppTheme.colors.blue.primary,
-            pressedContentColor: Color = AppTheme.colors.onBackground,
-            pressedBorderColor: Color = AppTheme.colors.blue.primary,
+            pressedBackgroundColor: Color = colors.primary,
+            pressedContentColor: Color = colors.onBackground,
+            pressedBorderColor: Color = colors.primary,
 
-            disabledBackgroundColor: Color = AppTheme.colors.background,
-            disabledContentColor: Color = AppTheme.colors.blue.secondary.copy(alpha = Constants.REQUIRED_ALPHA),
-            disabledBorderColor: Color = AppTheme.colors.blue.primary.copy(alpha = Constants.REQUIRED_ALPHA),
+            disabledBackgroundColor: Color = colors.background,
+            disabledContentColor: Color = colors.secondary.copy(alpha = Constants.REQUIRED_ALPHA),
+            disabledBorderColor: Color = colors.primary.copy(alpha = Constants.REQUIRED_ALPHA),
         ): AppButtonColors = DefaultAppButtonColors(
             backgroundColor = backgroundColor,
             contentColor = contentColor,
@@ -547,12 +542,12 @@ private data class DefaultAppButtonColors(
 
         @Composable
         fun filled(
-            backgroundColor: Color = AppTheme.colors.background,
-            pressedBackgroundColor: Color = AppTheme.colors.blue.secondary,
-            disabledBackgroundColor: Color = AppTheme.colors.background,
-            contentColor: Color = AppTheme.colors.blue.secondary,
-            pressedContentColor: Color = AppTheme.colors.onBackground,
-            disabledContentColor: Color = AppTheme.colors.blue.secondary.copy(alpha = Constants.REQUIRED_ALPHA),
+            backgroundColor: Color = colors.background,
+            pressedBackgroundColor: Color = colors.secondary,
+            disabledBackgroundColor: Color = colors.background,
+            contentColor: Color = colors.secondary,
+            pressedContentColor: Color = colors.onBackground,
+            disabledContentColor: Color = colors.secondary.copy(alpha = Constants.REQUIRED_ALPHA),
         ): AppButtonColors = DefaultAppButtonColors(
             backgroundColor = backgroundColor,
             contentColor = contentColor,

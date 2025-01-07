@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -42,13 +43,13 @@ fun AppCircularProgressBar(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(AppTheme.colors.background.copy(alpha = 0.6f))
+            .background(colors.background.copy(alpha = 0.6f))
             .focusable(true)
             .clickable(enabled = false, onClick = {}),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        CircularProgressIndicator(modifier = Modifier.size(48.px), color = AppTheme.colors.blue.primary)
+        CircularProgressIndicator(modifier = Modifier.size(48.px), color = colors.primary)
         AppBodyText(text = stringResource(id = R.string.dialog_loading_body))
     }
 }
@@ -267,7 +268,7 @@ fun Modifier.handleClickEvent(
         )
 )
 
-@Composable
+/*@Composable
 fun BoundedRippleEffect(content: @Composable (HapticFeedback) -> Unit) {
     val ripple = rememberRipple(
         color = LocalAppColors.current.red.light,
@@ -277,7 +278,7 @@ fun BoundedRippleEffect(content: @Composable (HapticFeedback) -> Unit) {
     CompositionLocalProvider(LocalIndication provides ripple) {
         content(haptic)
     }
-}
+}*/
 
 @Composable
 fun ColumnScope.FillPins(modifier: Modifier = Modifier, pinState: String?) {
@@ -309,8 +310,8 @@ fun <T> AppLazyColumn(
 
     @Composable
     fun getShape(index: Int, size: Int) = when (index) {
-        0 -> AppTheme.shapes.smallTopRounded
-        size - 1 -> AppTheme.shapes.smallBottomRounded
+        0 -> shapes.small
+        size - 1 -> shapes.small
         else -> RoundedCornerShape(ZeroCornerSize)
     }
 
@@ -339,7 +340,7 @@ fun <T> LazyItemScope.AppLazyColumItem(
         modifier = modifier
             .animateItemPlacement()
             .clickable(onClick = remember { { onItemClick(item) } })
-            .background(AppTheme.colors.overlay)
+            .background(colors.primary)
             .defaultMinSize(minHeight = 64.px)
             .fillMaxWidth()
             .padding(8.px)

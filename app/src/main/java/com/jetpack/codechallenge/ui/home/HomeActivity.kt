@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
@@ -20,7 +21,7 @@ import com.jetpack.codechallenge.navigation.NavCommand
 import com.jetpack.codechallenge.navigation.NavigationManager
 import com.jetpack.codechallenge.navigation.SchoolInfoDirections
 import com.jetpack.codechallenge.ui.themes.AppTheme
-import com.jetpack.codechallenge.ui.themes.appColors
+import com.jetpack.codechallenge.ui.themes.primaryLight
 import com.jetpack.codechallenge.util.view.AppNavigation
 import com.jetpack.codechallenge.util.view.PREVIEW_CONFIG
 import com.jetpack.codechallenge.util.view.px
@@ -28,8 +29,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import org.koin.androidx.scope.lifecycleScope
-import org.koin.androidx.scope.scope
 
 
 /**
@@ -44,13 +43,13 @@ class HomeActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                Scaffold()
+                InitScaffold()
             }
         }
     }
 
     @Composable
-    fun Scaffold() {
+    fun InitScaffold() {
         val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
         val state by navigationManager.commandFlow.collectAsState()
         val schoolSelect by viewModel.selectedSchool.collectAsState()
@@ -92,16 +91,32 @@ class HomeActivity: ComponentActivity() {
                     Icon(Icons.Filled.ArrowBack, "backIcon")
                 }
             },
-            backgroundColor = appColors.blue.dark,
+            backgroundColor = primaryLight,
             elevation = 10.px
         )
     }
 
-    @Preview(PREVIEW_CONFIG)
+    @Preview(name = "Default", showBackground = true, showSystemUi = true, device = "spec:width=411dp,height=891dp")
     @Composable
     fun DefaultPreview() {
         AppTheme {
-            Scaffold()
+            InitScaffold()
+        }
+    }
+
+    @Preview(name = "Mobile Landscape", showBackground = true, showSystemUi = true, device = "spec:width=1280dp,height=800dp,dpi=240")
+    @Composable
+    fun MobileLandscapePreview() {
+        AppTheme {
+            InitScaffold()
+        }
+    }
+
+    @Preview(name = "Tablet", showBackground = true, widthDp = 800, heightDp = 1280, device = "spec:width=673dp,height=841dp")
+    @Composable
+    fun TabletPreview() {
+        AppTheme {
+            InitScaffold()
         }
     }
 }
